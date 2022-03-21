@@ -20,6 +20,7 @@ const createPlayer = (name, marker) => {
 
 const gameBoard = (() => {
     const boardContainer = document.querySelector(".container");
+    const playerMessage = document.querySelector("p");
     let board = [];
     // let marker = "X";
 
@@ -49,6 +50,7 @@ const gameBoard = (() => {
                     } else {
                         item.textContent = gameController.activePlayer.marker;
                         board[index] = gameController.activePlayer.marker;
+                        playerMessage.textContent = `It's your turn ${gameController.playerTwo.name}`;
                         gameController.activePlayer = gameController.playerTwo;
                         gameController.checkWinner();
                     }
@@ -60,7 +62,7 @@ const gameBoard = (() => {
                     } else {
                         item.textContent = gameController.activePlayer.marker;
                         board[index] = gameController.activePlayer.marker;
-
+                        playerMessage.textContent = `It's your turn ${gameController.playerOne.name}`;
                         gameController.activePlayer = gameController.playerOne;
                         gameController.checkWinner();
                     }
@@ -69,7 +71,7 @@ const gameBoard = (() => {
         });
     };
 
-    return { board, createArray, createBoard, addMarker };
+    return { board, createArray, createBoard, addMarker, playerMessage };
 })();
 
 const gameController = (() => {
@@ -102,8 +104,8 @@ const gameController = (() => {
                 gameBoard.board[item[1]] === activePlayer.marker &&
                 gameBoard.board[item[2]] === activePlayer.marker
             ) {
-                console.log("winner!");
-
+                console.log(`${activePlayer.name} is the winner!`);
+                gameBoard.playerMessage.textContent = `${activePlayer.name} is the winner!`;
                 resetGame;
                 console.log(gameBoard.board);
             }
