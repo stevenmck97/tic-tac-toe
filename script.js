@@ -21,11 +21,11 @@ const createPlayer = (name, marker) => {
 const gameBoard = (() => {
     const boardContainer = document.querySelector(".container");
     let board = [];
-    let marker = "X";
+    // let marker = "X";
 
     const createArray = () => {
         for (let i = 0; i < 9; i++) {
-            board.push(marker);
+            board.push("");
         }
         // console.log(board);
     };
@@ -42,9 +42,19 @@ const gameBoard = (() => {
     const addMarker = () => {
         Array.from(boardContainer.children).forEach((item, index) => {
             item.addEventListener("click", () => {
-                item.textContent = "O";
-                board[index] = "O";
-                console.log(board);
+                if (gameController.activePlayer === gameController.playerOne) {
+                    item.textContent = gameController.activePlayer.marker;
+                    board[index] = gameController.activePlayer.marker;
+                    console.log(board);
+                    gameController.activePlayer = gameController.playerTwo;
+                } else if (
+                    gameController.activePlayer === gameController.playerTwo
+                ) {
+                    item.textContent = gameController.activePlayer.marker;
+                    board[index] = gameController.activePlayer.marker;
+                    console.log(board);
+                    gameController.activePlayer = gameController.playerOne;
+                }
             });
         });
     };
@@ -56,4 +66,11 @@ const gameController = (() => {
     gameBoard.createArray();
     gameBoard.createBoard();
     gameBoard.addMarker();
+
+    const playerOne = createPlayer("Bob", "X");
+    const playerTwo = createPlayer("Ross", "O");
+
+    let activePlayer = playerOne;
+
+    return { playerOne, playerTwo, activePlayer };
 })();
