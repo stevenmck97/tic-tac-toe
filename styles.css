@@ -8,14 +8,14 @@ body {
     display: grid;
     grid-template-columns: repeat(3, 100px);
     grid-template-rows: repeat(3, 100px);
+    justify-content: center;
 }
 
-.grid-container {
-    display: grid;
-}
-
-.grid-item {
+.board-item {
     width: 100px;
     height: 100px;
     border: solid 1px black;
+    text-align: center;
+    font-size: 90px;
+    margin-top: 150px;
 }
