@@ -84,8 +84,6 @@ const gameController = (() => {
 
     let activePlayer = playerOne;
 
-    const resetGame = gameBoard.createArray();
-
     const checkWinner = () => {
         const winningMoves = [
             [0, 1, 2],
@@ -98,15 +96,17 @@ const gameController = (() => {
             [2, 4, 6],
         ];
 
+        //gets each element eg. [0,1,2] is the first element.
         winningMoves.forEach((item) => {
             if (
+                // iterates through the elements' elements
                 gameBoard.board[item[0]] === activePlayer.marker &&
                 gameBoard.board[item[1]] === activePlayer.marker &&
                 gameBoard.board[item[2]] === activePlayer.marker
             ) {
                 console.log(`${activePlayer.name} is the winner!`);
                 gameBoard.playerMessage.textContent = `${activePlayer.name} is the winner!`;
-                resetGame;
+
                 console.log(gameBoard.board);
             }
         });
