@@ -42,18 +42,28 @@ const gameBoard = (() => {
     const addMarker = () => {
         Array.from(boardContainer.children).forEach((item, index) => {
             item.addEventListener("click", () => {
+                console.log(gameController.activePlayer);
                 if (gameController.activePlayer === gameController.playerOne) {
-                    item.textContent = gameController.activePlayer.marker;
-                    board[index] = gameController.activePlayer.marker;
-                    console.log(board);
-                    gameController.activePlayer = gameController.playerTwo;
+                    if (item.textContent === "X" || item.textContent === "O") {
+                        console.log("error");
+                    } else {
+                        item.textContent = gameController.activePlayer.marker;
+                        board[index] = gameController.activePlayer.marker;
+                        gameController.activePlayer = gameController.playerTwo;
+                        gameController.checkWinner();
+                    }
                 } else if (
                     gameController.activePlayer === gameController.playerTwo
                 ) {
-                    item.textContent = gameController.activePlayer.marker;
-                    board[index] = gameController.activePlayer.marker;
-                    console.log(board);
-                    gameController.activePlayer = gameController.playerOne;
+                    if (item.textContent === "X" || item.textContent === "O") {
+                        console.log("error");
+                    } else {
+                        item.textContent = gameController.activePlayer.marker;
+                        board[index] = gameController.activePlayer.marker;
+
+                        gameController.activePlayer = gameController.playerOne;
+                        gameController.checkWinner();
+                    }
                 }
             });
         });
@@ -72,5 +82,33 @@ const gameController = (() => {
 
     let activePlayer = playerOne;
 
-    return { playerOne, playerTwo, activePlayer };
+    const resetGame = gameBoard.createArray();
+
+    const checkWinner = () => {
+        const winningMoves = [
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 3, 6],
+            [1, 4, 7],
+            [2, 5, 8],
+            [0, 4, 8],
+            [2, 4, 6],
+        ];
+
+        winningMoves.forEach((item) => {
+            if (
+                gameBoard.board[item[0]] === activePlayer.marker &&
+                gameBoard.board[item[1]] === activePlayer.marker &&
+                gameBoard.board[item[2]] === activePlayer.marker
+            ) {
+                console.log("winner!");
+
+                resetGame;
+                console.log(gameBoard.board);
+            }
+        });
+    };
+
+    return { playerOne, playerTwo, activePlayer, checkWinner };
 })();
